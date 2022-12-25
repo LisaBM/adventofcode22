@@ -1,0 +1,9 @@
+[tool.poetry]
+name = "adventofcode22"
+version = "0.0.1"
+description = ""
+authors = ["Lisa Mattrisch"]
+
+[tool.poetry.dependencies]
+python = "3.10.*"
+
