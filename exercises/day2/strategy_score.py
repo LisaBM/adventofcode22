@@ -4,6 +4,7 @@ from typing import Iterator, List
 
 
 class RPCChoice:
+    """Class representing a choice for a round of Rock, Paper, Scissors."""
 
     def __init__(self, value: str) -> None:
         match value:
@@ -30,6 +31,7 @@ class RPCChoice:
 
 
 def strategy_score(filename: str) -> int:
+    """Compute the score of a strategy provided in a text file."""
     with open(filename, "r") as f:
         file_content = f.read().splitlines()
 
@@ -39,6 +41,7 @@ def strategy_score(filename: str) -> int:
 
 
 def _score_per_round(file_content: List[str]) -> Iterator[int]:
+    """Compute the score of a single round of Rock, Paper, Scissors."""
     for line in file_content:
         (opponents_choice_str, own_choice_str) = line.split(" ")
         opponents_choice = RPCChoice(opponents_choice_str)
@@ -49,12 +52,13 @@ def _score_per_round(file_content: List[str]) -> Iterator[int]:
 
 
 def _outcome_score(opponents_choice: RPCChoice, own_choice: RPCChoice) -> int:
-        if own_choice > opponents_choice:
-            return 6
-        elif own_choice < opponents_choice:
-            return 0
-        else:
-            return 3
+    """Compute the score related to the outcome of one round."""
+    if own_choice > opponents_choice:
+        return 6
+    elif own_choice < opponents_choice:
+        return 0
+    else:
+        return 3
 
 
 def run() -> None:
