@@ -7,3 +7,5 @@ authors = ["Lisa Mattrisch"]
 [tool.poetry.dependencies]
 python = "3.10.*"
 
+pytest = "*"
+yapf = "*"
