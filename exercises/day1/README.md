@@ -8,7 +8,7 @@ Start a development container.
 
 Inside the container, run 
 ```bash
-cd exercises/day2
+cd exercises/day1
 python most_calories.py -f <name of input file>
 ```
 
