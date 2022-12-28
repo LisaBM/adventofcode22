@@ -13,4 +13,3 @@ def test_summed_priorities(tmp_path):
         f.write("CrZsJsPPZsGzwwsLwLmpwMDw\n")
 
     assert item_prioritization.summed_priorities(filename) == 157
-    

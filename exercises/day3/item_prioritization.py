@@ -2,7 +2,7 @@ import argparse
 import logging
 import string
 from types import MappingProxyType
-from typing import Iterator, List
+from typing import Iterator, List, Set
 
 ALPHABET = list(string.ascii_lowercase) + list(string.ascii_uppercase)
 PRIORITIES = MappingProxyType(
@@ -10,8 +10,9 @@ PRIORITIES = MappingProxyType(
 
 
 def summed_priorities(filename: str) -> int:
-    """Compute the sum of priorities of miscategorized items 
-    given the rucksack contents in a text file.
+    """
+    Compute the sum of priorities of miscategorized items given the rucksack 
+    contents in a text file.
     """
     with open(filename, "r") as f:
         file_content = f.read().splitlines()
@@ -25,22 +26,26 @@ def summed_priorities(filename: str) -> int:
 def get_mistakes(file_content: List[str]) -> Iterator[str]:
     for rucksack_content in file_content:
         rucksack_content = rucksack_content.strip(" ")
-        n_items = len(rucksack_content)
-        assert n_items % 2 == 0, "Uneven amount of items."
 
-        compartment0 = set(rucksack_content[:int(n_items / 2)])
-        compartment1 = set(rucksack_content[int(n_items / 2):])
+        yield list(get_compartment_overlap(rucksack_content))[0]
 
-        miscategorized_items = compartment0 & compartment1
-        assert (len(miscategorized_items) < 2,
-                "More than one miscateorized item.")
 
-        yield list(miscategorized_items)[0]
+def get_compartment_overlap(rucksack_content: str) -> Set[str]:
+    n_items = len(rucksack_content)
+    assert n_items % 2 == 0, "Uneven amount of items."
+
+    compartment0 = set(rucksack_content[:int(n_items / 2)])
+    compartment1 = set(rucksack_content[int(n_items / 2):])
+
+    miscategorized_items = compartment0 & compartment1
+    assert len(miscategorized_items) < 2, "More than one miscateorized item."
+
+    return miscategorized_items
 
 
 def map_items_to_priorities(items: Iterator[str]) -> Iterator[int]:
     for item in items:
-        yield PRIORITIES[item] 
+        yield PRIORITIES[item]
 
 
 def run() -> None:
