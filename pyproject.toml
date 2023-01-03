@@ -8,5 +8,6 @@ authors = ["Lisa Mattrisch"]
 python = "3.10.*"
 
 mypy = "*"
+pylint = "*"
 pytest = "*"
 yapf = "*"
