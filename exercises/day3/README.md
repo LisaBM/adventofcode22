@@ -10,6 +10,7 @@ Inside the container, run
 ```bash
 cd exercises/day3
 python item_prioritization.py -f <name of input file>
+python batch_prioritization.py -f <name of input file>
 ```
 
-The solution to you input file will be logged in the terminal.
+The solutions to you input file will be logged in the terminal.
