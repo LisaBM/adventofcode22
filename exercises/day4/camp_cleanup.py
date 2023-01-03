@@ -3,17 +3,23 @@ import logging
 from typing import Iterator, List, Tuple
 
 
-def count_full_overlaps(filename: str) -> int:
+def count_overlaps(filename: str) -> Tuple[int, int]:
     """
-    Count the number of full section overlaps given the paired section
-    assignments in a text file.
+    Count the number of full section overlaps and total section overlaps given 
+    the paired section assignments in a text file.
     """
     with open(filename, "r") as f:
         file_content = f.read().splitlines()
 
     section_pairs = format_lines_to_sections(file_content)
 
-    return sum([is_full_overlap(p) for p in section_pairs])
+    n_full_overlaps = 0
+    n_overlaps = 0
+    for p in section_pairs:
+        n_full_overlaps += is_full_overlap(p)
+        n_overlaps += not (p[0].isdisjoint(p[1]))
+
+    return n_full_overlaps, n_overlaps
 
 
 def format_lines_to_sections(lines: List[str]) -> Iterator[Tuple[set, set]]:
@@ -35,7 +41,10 @@ def is_full_overlap(pair: Tuple[set, set]) -> bool:
 
 def run() -> None:
     args = parse_args()
-    logging.info(count_full_overlaps(args.filename))
+    
+    n_full_overlaps, n_overlaps = count_overlaps(args.filename)
+    logging.info(f"There are {n_full_overlaps} full overlaps in the data.")
+    logging.info(f"There are {n_overlaps} overlaps in total in the data.")
 
 
 def parse_args() -> argparse.Namespace:

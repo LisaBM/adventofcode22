@@ -1,7 +1,7 @@
 import camp_cleanup
 
 
-def test_count_full_overlaps(tmp_path):
+def test_count_overlaps(tmp_path):
     d = tmp_path
     filename = d / "temp.txt"
     with open(filename, "w") as f:
@@ -12,4 +12,4 @@ def test_count_full_overlaps(tmp_path):
         f.write("6-6,4-6\n")
         f.write("2-6,4-8\n")
 
-    assert camp_cleanup.count_full_overlaps(filename) == 2
+    assert camp_cleanup.count_overlaps(filename) == (2, 4)
